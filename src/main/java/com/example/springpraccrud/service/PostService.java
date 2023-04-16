@@ -22,7 +22,26 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> getPost() {
+    public List<Post> getPosts() {
         return postRepository.findAllByOrderByModifiedAtDesc();
     }
+    @Transactional(readOnly = true)
+    public Post getPost(Long id) {
+        return postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+    }
+
+    @Transactional
+    public Long update(Long id, PostRequestDto requestDto) {
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+
+        if (!post.getPassword().equals(requestDto.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        post.update(requestDto);
+        return post.getId();
+    }
+
 }
