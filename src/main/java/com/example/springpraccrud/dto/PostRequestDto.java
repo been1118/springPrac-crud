@@ -2,6 +2,8 @@ package com.example.springpraccrud.dto;
 
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 public class PostRequestDto {
 
@@ -9,5 +11,7 @@ public class PostRequestDto {
     private String username;
     private String post;
     private String password;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
 }

@@ -15,8 +15,8 @@ public class PostController {
 
     private final PostService postService;
     @PostMapping("/api/posts")
-    public ResponseDto<?> createPost(@RequestBody PostRequestDto requstDto){
-        return postService.createPost(requstDto);
+    public ResponseDto<?> createPost(@RequestBody PostRequestDto requestDto){
+        return postService.createPost(requestDto);
     }
 
     @GetMapping("/api/posts")
@@ -31,7 +31,7 @@ public class PostController {
 
     @PutMapping("/api/posts/{id}")
     public ResponseDto<?> updatePost(@PathVariable Long id, @RequestBody PostRequestDto requestDto){
-        return postService.update(id, requestDto);
+        return postService.updatePost(id, requestDto);
     }
 
     @DeleteMapping("/api/posts/{id}")

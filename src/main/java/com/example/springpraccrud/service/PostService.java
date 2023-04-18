@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -17,15 +16,15 @@ public class PostService {
     private final PostRepository postRepository;
 
     @Transactional
-    public ResponseDto<?> createPost(PostRequestDto requstDto) {
-        Post post = new Post(requstDto);
+    public ResponseDto<?> createPost(PostRequestDto requestDto) {
+        Post post = new Post(requestDto);
         postRepository.save(post);
         return ResponseDto.setSuccess(post);
     }
 
     @Transactional(readOnly = true)
     public ResponseDto<?> getPosts() {
-        LinkedList<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
+        List<Post> postList = postRepository.findAllByOrderByModifiedAtDesc();
         return ResponseDto.setSuccess(postList);
     }
     @Transactional(readOnly = true)
@@ -34,7 +33,7 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseDto<?> update(Long id, PostRequestDto requestDto) {
+    public ResponseDto<?> updatePost(Long id, PostRequestDto requestDto) {
         Post post = getPostIfExists(id);
         checkPassword(post, requestDto.getPassword());
         post.update(requestDto);

@@ -1,6 +1,7 @@
 package com.example.springpraccrud.entity;
 
 import com.example.springpraccrud.dto.PostRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,15 +15,21 @@ public class Post extends Timestamped{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false)
+    private String title;
     @Column(nullable = false)
     private String username;
 
     @Column(nullable = false)
     private String post;
+
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
     public Post(PostRequestDto requestDto) {
+        this.title = requestDto.getTitle();
         this.username = requestDto.getUsername();
         this.post = requestDto.getPost();
         this.password = requestDto.getPassword();
